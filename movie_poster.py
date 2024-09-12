@@ -1,6 +1,6 @@
 import requests
 
-api_key = "6fe130c49e280de9fe8b3996b83e009e" 
+api_key = "###" 
 search_url = f"https://api.themoviedb.org/3/search/movie?api_key={api_key}&query=the+avengers"
 
 headers = {
