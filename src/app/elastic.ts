@@ -17,7 +17,7 @@ async function loadData() {
         const data = JSON.parse(fs.readFileSync('wiki_movie_plots_deduped.json', 'utf-8'));
 
         // Create a bulk request body
-        const bulkBody = data.flatMap(doc => [
+        const bulkBody = data.flatMap((doc: any) => [
             { index: { _index: 'movies' } },  // Index operation
             doc
         ]);
@@ -26,7 +26,7 @@ async function loadData() {
         const { body: bulkResponse } = await client.bulk({ refresh: true, body: bulkBody });
 
         if (bulkResponse.errors) {
-            const erroredDocuments = bulkResponse.items.filter(item => item.index && item.index.error);
+            const erroredDocuments = bulkResponse.items.filter((item: any) => item.index && item.index.error);
             console.error('Error:', erroredDocuments);
         } else {
             console.log('All documents have been indexed.');
@@ -40,7 +40,7 @@ async function loadData() {
 // const userInput = "A man is imprisoned for murdering his wife. He escapes from prison through a tunnel and meets his friend on the outside in Mexico.";
 // const userInput = "Crops aren't growing well on earth. The space agency notices a worm hole near Saturn. A team of astronauts goes through the worm hole to find a new planet for humans to live on. They encounter a black hole and travel through time.";
 const userInput = "A family discovers festival grounds in the woods. The parents gorge themselves on food and drink and turn into pigs. The daughter has to work in the bathhouse to save them. She meets a dragon and a witch along the way.";
-async function searchData() {
+async function searchData(input : string) {
     try {
         const response = await client.search({
             index: 'movies',
@@ -56,12 +56,13 @@ async function searchData() {
                 }
             }
         });
-        // console.log('Search Results:', response.hits.hits.map(hit => hit._source.Title));
-        console.log('Search Results:', JSON.stringify(response));
+        console.log('Search Results:', response.hits.hits.map((hit: any) => hit._source.Title));
+        // console.log('Search Results:', JSON.stringify(response));
+        // fs.writeFileSync('search_results.json', JSON.stringify(response, null, 2));
     } catch (error) {
         console.error('Error searching documents:', error);
     }
 }
 
 
-searchData();
+searchData(userInput);
