@@ -36,10 +36,10 @@ async function loadData() {
     }
 }
 
-// const userInput = `"A clownfish gets lost from his home and has to find his way back. His dad goes to look for him with his friend. He encounters a shark, a turtle, and a whale along the way. The lost fish is stuck in a dentist office"`;
+// const userInput = "A clownfish gets lost from his home and has to find his way back. His dad goes to look for him with his friend. He encounters a shark, a turtle, and a whale along the way. The lost fish is stuck in a dentist office";
 // const userInput = "A man is imprisoned for murdering his wife. He escapes from prison through a tunnel and meets his friend on the outside in Mexico.";
 // const userInput = "Crops aren't growing well on earth. The space agency notices a worm hole near Saturn. A team of astronauts goes through the worm hole to find a new planet for humans to live on. They encounter a black hole and travel through time.";
-// const userInput = "A family discovers a fair in the woods. The parents gorge themselves on food and drink and turn into pigs. The daughter has to work in the bathhouse to save them. She meets a dragon and a witch along the way.";
+const userInput = "A family discovers festival grounds in the woods. The parents gorge themselves on food and drink and turn into pigs. The daughter has to work in the bathhouse to save them. She meets a dragon and a witch along the way.";
 async function searchData() {
     try {
         const response = await client.search({
@@ -56,11 +56,11 @@ async function searchData() {
                 }
             }
         });
-        console.log('Search Results:', response.hits.hits.map(hit => hit._source.Title));
+        // console.log('Search Results:', response.hits.hits.map(hit => hit._source.Title));
+        console.log('Search Results:', JSON.stringify(response));
     } catch (error) {
         console.error('Error searching documents:', error);
     }
-    
 }
 
 
