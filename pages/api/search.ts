@@ -17,8 +17,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const client = new Client({
       host: process.env.NEXT_PUBLIC_BONSAI_URL,
       auth: {
-        username: process.env.NEXT_PUBLIC_BONSAI_ACCESS_KEY,
-        password: process.env.NEXT_PUBLIC_BONSAI_SECRET_KEY,
+        username: process.env.NEXT_PUBLIC_BONSAI_U,
+        password: process.env.NEXT_PUBLIC_BONSAI_P,
       },
     });
 

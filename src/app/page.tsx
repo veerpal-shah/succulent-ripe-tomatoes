@@ -13,7 +13,7 @@ export default function Home() {
       return;
     }
 
-    console.log(process.env.NEXT_PUBLIC_BONSAI_URL, process.env.NEXT_PUBLIC_BONSAI_ACCESS_KEY, process.env.NEXT_PUBLIC_BONSAI_SECRET_KEY);
+    console.log(process.env.NEXT_PUBLIC_BONSAI_URL, process.env.NEXT_PUBLIC_BONSAI_U, process.env.NEXT_PUBLIC_BONSAI_P);
 
     try {
       // Send a POST request to the /api/search endpoint with the user's input
