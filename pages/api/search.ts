@@ -2,7 +2,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 const { Client } = require('elasticsearch');
 const fs = require('fs');
-require('dotenv').config({path: '../../.env.local'});
+require('dotenv').config();
 
 // Simulate your searchData function here
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -40,6 +40,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
       // Get the titles of the matching movies
       const movieTitles = response.hits.hits.map((hit: any) => hit._source.Title);
+      // const movieTitles = ['The Matrix', 'The Matrix Reloaded', 'The Matrix Revolutions'];
       
       // Send a response back to the client with the movie titles
       return res.status(200).json({ movies: movieTitles });
