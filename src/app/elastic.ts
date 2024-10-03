@@ -130,4 +130,4 @@ async function getMovieInfo(movie: string): Promise<void> {
 }
 
 
-searchData(userInput);
+// searchData(userInput);
