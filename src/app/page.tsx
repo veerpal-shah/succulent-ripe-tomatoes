@@ -27,6 +27,8 @@ export default function Home() {
 
       const data = await response.json();
 
+      console.log('Response from search:', data);
+
       if (response.ok) {
         // Update the movieResults state with the returned movie titles
         setMovieResults(data.movies);
