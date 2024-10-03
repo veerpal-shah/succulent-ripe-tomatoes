@@ -40,8 +40,28 @@ async function loadData() {
 // const userInput = "A clownfish gets lost from his home and has to find his way back. His dad goes to look for him with his friend. He encounters a shark, a turtle, and a whale along the way. The lost fish is stuck in a dentist office";
 // const userInput = "A man is imprisoned for murdering his wife. He escapes from prison through a tunnel and meets his friend on the outside in Mexico.";
 // const userInput = "Crops aren't growing well on earth. The space agency notices a worm hole near Saturn. A team of astronauts goes through the worm hole to find a new planet for humans to live on. They encounter a black hole and travel through time.";
-const userInput = "A man is accused of stealing drugs from a drug dealer and gets his rug stolen. He is really chill and named 'The Dude'. He goes to the drug dealer's house to get his rug back";
+
+
 // const userInput = "A family discovers festival grounds in the woods. The parents gorge themselves on food and drink and turn into pigs. The daughter has to work in the bathhouse to save them. She meets a dragon and a witch along the way.";
+// const userInput = "A garbage robot and fancy robot fall in love and save Earth. Fat people are in space";
+
+
+
+// In class examples
+// const userInput = "A lobby boy becomes friends with a hotel concierge. The concierge is framed"
+// const userInput = "A dude gets his rug stolen and he goes on a quest to get it back. He bowls";
+// const userInput = "A janitor goes to therapy and solves a math problem";
+// const userInput = "Kids lose their ball in a creepy neighbor's yard and try to get it back. It's halloween and the house eats them";
+// const userInput = "A couple gets a flat tire in Ohio and goes to a house for help. They meet an interesting group";
+
+// Not really the plot of the movie
+// const userInput = "A princess sings with a talking snowman while her sister tries to kill everyone with ice powers";
+
+// Impressive
+// const userInput = "Foxes steal chickens";
+
+// const userInput = "A rich girl goes on summer vacation with her family and helps another girl get an abortion. They dance";
+
 
 // Searches the data in the Elasticsearch index
 async function searchData(userInput: string) {
