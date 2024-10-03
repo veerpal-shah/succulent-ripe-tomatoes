@@ -13,6 +13,7 @@ export default function Home() {
       return;
     }
 
+    console.log("rahhhhhhhhhhh")
     console.log(process.env.NEXT_PUBLIC_BONSAI_URL, process.env.NEXT_PUBLIC_BONSAI_ACCESS_KEY, process.env.NEXT_PUBLIC_BONSAI_SECRET_KEY);
 
     try {
