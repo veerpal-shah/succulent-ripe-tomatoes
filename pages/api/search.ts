@@ -13,34 +13,34 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       return res.status(400).json({ error: 'Movie description is required.' });
     }
 
-    // Create Client
-    const client = new Client({
-      host: process.env.NEXT_PUBLIC_BONSAI_URL,
-      auth: {
-        username: process.env.BONSAI_ACCESS_KEY,
-        password: process.env.BONSAI_SECRET_KEY,
-      },
-    });
+    // // Create Client
+    // const client = new Client({
+    //   host: process.env.NEXT_PUBLIC_BONSAI_URL,
+    //   auth: {
+    //     username: process.env.BONSAI_ACCESS_KEY,
+    //     password: process.env.BONSAI_SECRET_KEY,
+    //   },
+    // });
 
     try {
-      const response = await client.search({
-        index: 'movies',
-        body: {
-          query: {
-            more_like_this: {
-              fields: ['Plot'],
-              like: userInput,
-              min_term_freq: 1,
-              max_query_terms: 25,
-              min_doc_freq: 1
-            }
-          }
-        }
-      });
+    //   const response = await client.search({
+    //     index: 'movies',
+    //     body: {
+    //       query: {
+    //         more_like_this: {
+    //           fields: ['Plot'],
+    //           like: userInput,
+    //           min_term_freq: 1,
+    //           max_query_terms: 25,
+    //           min_doc_freq: 1
+    //         }
+    //       }
+    //     }
+    //   });
 
-      // Get the titles of the matching movies
-      const movieTitles = response.hits.hits.map((hit: any) => hit._source.Title);
-      // const movieTitles = ['The Matrix', 'The Matrix Reloaded', 'The Matrix Revolutions'];
+    //   // Get the titles of the matching movies
+    //   const movieTitles = response.hits.hits.map((hit: any) => hit._source.Title);
+      const movieTitles = ['The Matrix', 'The Matrix Reloaded', 'The Matrix Revolutions'];
       
       // Send a response back to the client with the movie titles
       return res.status(200).json({ movies: movieTitles });
