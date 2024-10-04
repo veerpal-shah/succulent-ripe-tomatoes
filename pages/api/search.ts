@@ -15,9 +15,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     res.status(500).json({ error: process.env });
 
     console.log("Environment variables in API handler:", {
-      url: process.env.NEXT_PUBLIC_BONSAI_URL,
-      username: process.env.NEXT_PUBLIC_BONSAI_U,
-      password: process.env.NEXT_PUBLIC_BONSAI_P,
+      url: process.env.BONSAI_URL,
+      username: process.env.BONSAI_ACCESS,
+      password: process.env.BONSAI_SECRET,
     });
 
     // Create Client
