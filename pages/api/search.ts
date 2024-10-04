@@ -12,8 +12,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       return res.status(400).json({ error: 'Movie description is required.' });
     }
 
-    res.status(500).json({ error: process.env });
-
     console.log("Environment variables in API handler:", {
       url: process.env.BONSAI_URL,
       username: process.env.BONSAI_ACCESS,
