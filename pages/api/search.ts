@@ -12,20 +12,18 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       return res.status(400).json({ error: 'Movie description is required.' });
     }
 
-    res.status(500).json({ error: process.env });
-
     console.log("Environment variables in API handler:", {
-      url: process.env.BONSAI_URL,
-      username: process.env.BONSAI_ACCESS,
-      password: process.env.BONSAI_SECRET,
+      url: process.env.NEXT_PUBLIC_BONSAI_URL,
+      username: process.env.NEXT_PUBLIC_BONSAI_U,
+      password: process.env.NEXT_PUBLIC_BONSAI_P,
     });
 
     // Create Client
     const client = new Client({
-      host: process.env.NEXT_PUBLIC_BONSAI_URL,
+      host: process.env.BONSAI_URL,
       auth: {
-        username: process.env.BONSAI_ACCESS_KEY,
-        password: process.env.BONSAI_SECRET_KEY,
+        username: process.env.BONSAI_ACCESS,
+        password: process.env.BONSAI_SECRET,
       },
     });
 
