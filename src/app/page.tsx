@@ -16,7 +16,6 @@ export default function Home() {
     console.log(process.env.NEXT_PUBLIC_BONSAI_URL, process.env.NEXT_PUBLIC_BONSAI_U, process.env.NEXT_PUBLIC_BONSAI_P);
 
     try {
-      // Send a POST request to the /api/search endpoint with the user's input
       const response = await fetch('/api/search', {
         method: 'POST',
         headers: {
@@ -30,11 +29,9 @@ export default function Home() {
       console.log('Response from search:', data);
 
       if (response.ok) {
-        // Update the movieResults state with the returned movie titles
         setMovieResults(data.movies);
         setErrorMessage(null);  // Clear any previous errors
       } else {
-        // Handle any errors from the API
         setErrorMessage(data.error || 'An error occurred while searching for movies.');
       }
     } catch (error) {
@@ -44,25 +41,35 @@ export default function Home() {
   };
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-8 bg-[#d6b392]">
-      <div className="w-full max-w-3xl p-8 bg-[#c09a7a] border-2 border-[#dbab7f] rounded-lg">
+    <main className="flex min-h-screen flex-col items-center justify-center p-8 main-bg">
+      <div className="w-full max-w-3xl p-8 container-bg border-2 rounded-lg">
         <h1 className="text-4xl font-bold text-center mb-8">Hollywood Movies and More</h1>
         <p className="text-center text-lg mb-8">
           What movie am I thinking of? Does it exist? Let’s NOT find out!
         </p>
         
-        {/* Centered Input Box */}
-        <textarea
-          className="w-full p-4 text-lg border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8ea18c] text-black"
-          placeholder="Describe the movie you want to find..."
-          rows={6}
-          value={userInput}
-          onChange={(e) => setUserInput(e.target.value)}
-        />
+        {/* Marquee-styled Input Box */}
+        <div className="marquee-border">
+          <div className="marquee-lights">
+            <span className="light"></span>
+            <span className="light"></span>
+            <span className="light"></span>
+            <span className="light"></span>
+            
+            {/* Add or remove lights as needed */}
+          </div>
+          <textarea
+            className="w-full p-4 text-lg border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8ea18c] text-black"
+            placeholder="Describe the movie you want to find..."
+            rows={6}
+            value={userInput}
+            onChange={(e) => setUserInput(e.target.value)}
+          />
+        </div>
 
         {/* Submit Button */}
         <button
-          className="mt-4 w-full bg-[#8ea18c] text-white py-2 px-4 rounded-lg hover:bg-[#7a8a7b] focus:outline-none focus:ring-2 focus:ring-[#6c786d] focus:ring-opacity-50"
+          className="submit-button mt-4 w-full text-white py-2 px-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#6c786d] focus:ring-opacity-50"
           onClick={handleSubmit}
         >
           Submit

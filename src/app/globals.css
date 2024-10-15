@@ -6,6 +6,14 @@
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
+
+  /* Colors for background and button on main page */
+  --main-bg-color: #424549;
+  --container-bg-color: #424549;
+  --container-border-color: #FFAA33;
+
+  --button-bg-color: #FFAA33;
+  --button-hover-color: #FFD700;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -29,5 +37,75 @@ body {
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+}
+
+
+.submit-button {
+  background-color: var(--button-bg-color);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  transition: background-color 0.3s;
+}
+
+.submit-button:hover {
+  background-color: var(--button-hover-color);
+}
+
+
+/* Background color classes using CSS variables */
+.main-bg {
+  background-color: var(--main-bg-color);
+}
+
+.container-bg {
+  background-color: var(--container-bg-color);
+  border-color: var(--container-border-color);
+}
+
+/* Marquee style for board */
+.marquee-border {
+  border: 5px solid #FFAA33;
+  padding: 10px 20px 20px 30px;
+  background-color: #333;
+  position: relative;
+  box-shadow: 0 0 15px rgba(255, 165, 0, 0.8), 0 0 15px rgba(255, 165, 0, 0.8) inset;
+}
+
+
+
+.marquee-border::before {
+  content: '';
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  right: -10px;
+  bottom: -10px;
+  border: 3px solid #FFD700;
+  padding: 5px;
+  box-shadow: 0 0 10px #FFD700;
+  pointer-events: none; /* Prevens stop from typing to text box */
+}
+
+
+.marquee-lights {
+  display: flex;
+  justify-content: space-around;
+  padding: 5px;
+}
+
+.light {
+  width: 12px;
+  height: 12px;
+  background-color: #FFD700;
+  border-radius: 50%;
+  box-shadow: 0 0 8px #FFD700;
+  animation: blink 1.5s infinite;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0.5;
   }
 }
