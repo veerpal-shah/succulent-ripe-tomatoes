@@ -3,7 +3,8 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 0, 0, 0;
+  /* foreground controls the general text color*/
+  --foreground-rgb: 200, 200, 200;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
 
@@ -64,7 +65,21 @@ body {
   border-color: var(--container-border-color);
 }
 
-/* Marquee style for board */
+/* Layout styles */
+.grid-layout {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  gap: 1rem;
+}
+
+.search-section, .poster-section, .recommendations-section {
+  border: 2px solid var(--container-border-color);
+  padding: 1rem;
+  background-color: var(--container-bg-color);
+  border-radius: 0.5rem;
+}
+
+/* Marquee style for board amimation */
 .marquee-border {
   border: 5px solid #FFAA33;
   padding: 10px 20px 20px 30px;
@@ -72,8 +87,6 @@ body {
   position: relative;
   box-shadow: 0 0 15px rgba(255, 165, 0, 0.8), 0 0 15px rgba(255, 165, 0, 0.8) inset;
 }
-
-
 
 .marquee-border::before {
   content: '';
@@ -85,7 +98,7 @@ body {
   border: 3px solid #FFD700;
   padding: 5px;
   box-shadow: 0 0 10px #FFD700;
-  pointer-events: none; /* Prevens stop from typing to text box */
+  pointer-events: none;
 }
 
 
