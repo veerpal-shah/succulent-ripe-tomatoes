@@ -13,8 +13,6 @@ export default function Home() {
       return;
     }
 
-    console.log(process.env.NEXT_PUBLIC_BONSAI_URL, process.env.NEXT_PUBLIC_BONSAI_U, process.env.NEXT_PUBLIC_BONSAI_P);
-
     try {
       // Send a POST request to the /api/search endpoint with the user's input
       const response = await fetch('/api/search', {
@@ -69,7 +67,7 @@ export default function Home() {
         </button>
 
         {/* Display search results or error */}
-        <div className="mt-4">
+        {/* <div className="mt-4">
           {errorMessage && <p className="text-red-500">{errorMessage}</p>}
           {movieResults.length > 0 && (
             <ul className="list-disc pl-5">
@@ -78,7 +76,7 @@ export default function Home() {
               ))}
             </ul>
           )}
-        </div>
+        </div> */}
       </div>
     </main>
   );

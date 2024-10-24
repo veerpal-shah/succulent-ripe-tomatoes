@@ -12,18 +12,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       return res.status(400).json({ error: 'Movie description is required.' });
     }
 
-    console.log("Environment variables in API handler:", {
-      url: process.env.NEXT_PUBLIC_BONSAI_URL,
-      username: process.env.NEXT_PUBLIC_BONSAI_U,
-      password: process.env.NEXT_PUBLIC_BONSAI_P,
-    });
-
     // Create Client
     const client = new Client({
-      host: process.env.BONSAI_URL,
+      host: process.env.NEXT_PUBLIC_BONSAI_URL,
       auth: {
-        username: process.env.BONSAI_ACCESS,
-        password: process.env.BONSAI_SECRET,
+        username: process.env.BONSAI_ACCESS_KEY,
+        password: process.env.BONSAI_SECRET_KEY,
       },
     });
 
@@ -48,11 +42,23 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       console.log("Response from search:", response);
 
       // Get the titles of the matching movies
-      const movieTitles = response?.hits?.hits?.map((hit: any) => hit?._source?.Title);
+      // const movieTitles = response?.hits?.hits?.map((hit: any) => hit?._source?.Title);
       // const movieTitles = ['The Matrix', 'The Matrix Reloaded', 'The Matrix Revolutions'];
-      
+      const movies = response?.hits?.hits?.map((hit: any) => {
+        return {
+          "id": hit?._id,
+          "cast": hit?._source?.Cast.split(', '),
+          "director": hit?._source?.Director,
+          "genre": hit?._source?.Genre,
+          "origin": hit?._source['Origin/Ethnicity'],
+          "plot": hit?._source?.Plot,
+          "release": hit?._source['Release Year'],
+          "title": hit?._source?.Title,
+          "wiki": hit?._source['Wiki Page']
+        }
+      });
       // Send a response back to the client with the movie titles
-      return res.status(200).json({ movies: movieTitles, response: response });
+      return res.status(200).json({ movies });
     } catch (error) {
       console.error('Error searching documents:', error);
       return res.status(500).json({ error: 'Error searching for movies.' });
