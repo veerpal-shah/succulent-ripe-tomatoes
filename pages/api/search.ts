@@ -50,9 +50,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       // Get the titles of the matching movies
       const movieTitles = response?.hits?.hits?.map((hit: any) => hit?._source?.Title);
       // const movieTitles = ['The Matrix', 'The Matrix Reloaded', 'The Matrix Revolutions'];
+
+      // Get movie info for the first movie
+      const moveiDetails = await getMovieInfo(movieTitles[0]);
       
       // Send a response back to the client with the movie titles
-      return res.status(200).json({ movies: movieTitles, response: response });
+      return res.status(200).json({ movies: movieTitles, response: response, moveiDetails: moveiDetails });
     } catch (error) {
       console.error('Error searching documents:', error);
       return res.status(500).json({ error: 'Error searching for movies.' });
@@ -61,5 +64,51 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     // Only allow POST requests
     res.setHeader('Allow', ['POST']);
     return res.status(405).json({ error: `Method ${req.method} not allowed` });
+  }
+}
+
+
+async function getMovieInfo(movie: string): Promise<any> {
+  const api_key = process.env.TMDB_API_KEY;
+  const searchUrl = `https://api.themoviedb.org/3/search/movie?api_key=${api_key}&query=${encodeURIComponent(movie)}`;
+
+
+  try {
+      const response = await fetch(searchUrl);
+      const data = await response.json();
+
+      console.log("Movie Info:", data);
+
+      if (data.results && data.results.length > 0) {
+          // POSTER
+          const posterPath: string = data.results[0].poster_path;
+          const fullPath: string = `https://image.tmdb.org/t/p/w500/${posterPath}`;
+          const imgResponse = await fetch(fullPath);
+          const imgData = await imgResponse.arrayBuffer();
+          const buffer = Buffer.from(imgData);
+
+          fs.writeFileSync('poster.jpg', buffer);
+          console.log("Poster Downloaded");
+
+          console.log(`Number of Ratings: ${data.results[0].vote_count}`);
+          console.log(`Average Rating Out of 10: ${data.results[0].vote_average}`);
+          const movieId: number = data.results[0].id;
+
+          const reviewUrl = `https://api.themoviedb.org/3/movie/${movieId}/reviews?api_key=${api_key}`;
+          const reviewsResponse = await fetch(reviewUrl);
+          const reviewsData = await reviewsResponse.json();
+
+          if (reviewsData.results && reviewsData.results.length > 0) {
+              console.log(reviewsData.results[0].content);
+          } else {
+              console.log("No reviews found.");
+          }
+
+          return data;
+      } else {
+          console.log("No results found.");
+      }
+  } catch (error) {
+      console.error("Error fetching movie info:", error);
   }
 }
