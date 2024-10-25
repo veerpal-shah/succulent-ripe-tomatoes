@@ -1,6 +1,6 @@
 "use client"; // Use the client-side runtime
 
-import { useState } from 'react'; // Import useState hook
+import { useState } from 'react';
 
 export default function Home() {
   const [userInput, setUserInput] = useState('');
@@ -36,7 +36,6 @@ export default function Home() {
         setMovieResults(data.movies);
         setErrorMessage(null);  
         setHasSearched(true);  // Indicate that a search has been made
-        
       } else {
         // Handle any errors from the API
         setErrorMessage(data.error || 'An error occurred while searching for movies.');
@@ -49,80 +48,112 @@ export default function Home() {
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center p-8 main-bg">
-      <div className="grid-layout w-full max-w-7xl">
-        
-        {/* Search Section */}
-        <div className="search-section">
-          <h2 className="text-2xl font-bold mb-4">Search Movie</h2>
-          
-          <div className="marquee-border mb-4">
+      
+      {!hasSearched ? (
+        // Larger marquee-styled search box before the first search
+        <div className="flex flex-col items-center justify-center w-full max-w-xl p-8">
+          <h2 className="text-4xl font-bold mb-8 text-center">Search Movie</h2>
+
+          <div className="marquee-border w-full p-6 mb-8">
             <div className="marquee-lights">
               <span className="light"></span>
               <span className="light"></span>
               <span className="light"></span>
               <span className="light"></span>
             </div>
+
             <textarea
-              className="w-full p-4 text-lg border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8ea18c] text-black"
+              className="w-full p-6 text-xl border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8ea18c] text-black"
               placeholder="Describe the movie you want to find..."
-              rows={4}
-              value={userInput}
+              rows={6}
+              value={userInput}x
               onChange={(e) => setUserInput(e.target.value)}
             />
           </div>
 
           <button
-            className="submit-button w-full text-white py-2 px-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#6c786d] focus:ring-opacity-50"
+            className="submit-button w-full text-white py-3 px-5 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#6c786d] focus:ring-opacity-50"
             onClick={handleSubmit}
           >
             Submit
           </button>
-
-          {/* Top Guesses */}
-          {hasSearched && movieResults.length > 1 && (
-            <>
-              <h3 className="text-xl mt-6">Other Top Guesses:</h3>
-              <ul className="list-disc pl-5 mt-2">
-                {movieResults.slice(1).map((movie, index) => (
-                  <li key={index}>{movie}</li>
-                ))}
-              </ul>
-            </>
-          )}
         </div>
-
-        {/* Poster Section - Always Visible with Placeholder */}
-        <div className="poster-section">
-          <h2 className="text-2xl font-bold mb-4">Top Results</h2>
-          <div className="aspect-w-2 aspect-h-3 border border-gray-500 flex items-center justify-center">
-            {hasSearched && movieResults.length > 0 ? (
-              <img
-                src="/image_name.jpg"  // Couldn't get this to work
-                alt={movieResults[0]}  // I think this is how this should be accessed but not sure because bonsai isn't working on my LM
-                className="object-cover w-full h-full rounded-md"
+      ) : (
+        // Full layout after search
+        <div className="grid-layout w-full max-w-7xl">
+        
+          {/* Search Section */}
+          <div className="search-section">
+            <h2 className="text-2xl font-bold mb-4">Search Movie</h2>
+            
+            <div className="marquee-border mb-4">
+              <div className="marquee-lights">
+                <span className="light"></span>
+                <span className="light"></span>
+                <span className="light"></span>
+                <span className="light"></span>
+              </div>
+              <textarea
+                className="w-full p-4 text-lg border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8ea18c] text-black"
+                placeholder="Describe the movie you want to find..."
+                rows={4}
+                value={userInput}
+                onChange={(e) => setUserInput(e.target.value)}
               />
-            ) : (
-              <p>3:2 Ratio Poster Placeholder</p> // Placeholder text for the poster section
+            </div>
+
+            <button
+              className="submit-button w-full text-white py-2 px-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#6c786d] focus:ring-opacity-50"
+              onClick={handleSubmit}
+            >
+              Submit
+            </button>
+
+            {/* Top Guesses */}
+            {movieResults.length > 1 && (
+              <>
+                <h3 className="text-xl mt-6">Other Top Guesses:</h3>
+                <ul className="list-disc pl-5 mt-2">
+                  {movieResults.slice(1, 4).map((movie, index) => (
+                    <li key={index}>{movie}</li>
+                  ))}
+                </ul>
+              </>
             )}
           </div>
-          <div className="mt-4">
-            <p>{hasSearched && movieResults.length > 0 ? `Title: ${movieResults[0]}` : "Title"}</p>
-            <p>Rating</p>
-            <p>Review</p>
-          </div>
-        </div>
 
-        {/* Recommendations Section - Always Visible */}
-        <div className="recommendations-section">
-          <h2 className="text-2xl font-bold mb-4">Recommendations</h2>
-          <p className="italic">Coming Soon...</p>
+          {/* Poster Section - Visible After Search */}
+          <div className="poster-section">
+            <h2 className="text-2xl font-bold mb-4">Top Result</h2>
+            <div className="aspect-w-2 aspect-h-3 border border-gray-500 flex items-center justify-center">
+              {movieResults.length > 0 ? (
+                <img
+                  src="/image_name.jpg"  // Image placeholder
+                  alt={movieResults[0]}  // First movie title
+                  className="object-cover w-full h-full rounded-md"
+                />
+              ) : (
+                <p>3:2 Ratio Poster Placeholder</p> 
+              )}
+            </div>
+            <div className="mt-4">
+              <p>{movieResults.length > 0 ? `Title: ${movieResults[0]}` : "Title"}</p>
+              <p>Rating</p>
+              <p>Review</p>
+            </div>
+          </div>
+
+          {/* Recommendations Section - Visible After Search */}
+          <div className="recommendations-section">
+            <h2 className="text-2xl font-bold mb-4">Recommendations</h2>
+            <p className="italic">Coming Soon...</p>
+          </div>
+
         </div>
-      </div>
+      )}
     </main>
   );
 }
-
-
 
 /* 
 - Need to get this tied to the elastic search to test functionality
