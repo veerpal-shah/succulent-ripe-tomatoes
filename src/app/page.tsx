@@ -66,7 +66,7 @@ export default function Home() {
               className="w-full p-6 text-xl border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8ea18c] text-black"
               placeholder="Describe the movie you want to find..."
               rows={6}
-              value={userInput}x
+              value={userInput}
               onChange={(e) => setUserInput(e.target.value)}
             />
           </div>
