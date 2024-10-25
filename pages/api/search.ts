@@ -41,9 +41,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
       console.log("Response from search:", response);
 
-      // Get the titles of the matching movies
-      // const movieTitles = response?.hits?.hits?.map((hit: any) => hit?._source?.Title);
-      // const movieTitles = ['The Matrix', 'The Matrix Reloaded', 'The Matrix Revolutions'];
+      // Get the data of the matching movies
       const movies = response?.hits?.hits?.map((hit: any) => {
         return {
           "id": hit?._id,
@@ -57,7 +55,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           "wiki": hit?._source['Wiki Page']
         }
       });
-      // Send a response back to the client with the movie titles
+      // Send a response back to the client with the movie data
       return res.status(200).json({ movies });
     } catch (error) {
       console.error('Error searching documents:', error);
