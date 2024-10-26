@@ -3,31 +3,53 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+  --foreground-rgb: 111, 123, 161;
+  --background-start-rgb: 12, 17, 23;
+  --background-end-rgb: 4, 6, 8;
+  --headline-rgb: 255, 255, 255;
 }
 
-@media (prefers-color-scheme: dark) {
+/* @media (prefers-color-scheme: dark) {
   :root {
     --foreground-rgb: 255, 255, 255;
     --background-start-rgb: 0, 0, 0;
     --background-end-rgb: 0, 0, 0;
   }
-}
+} */
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  background: linear-gradient(217deg, rgb(var(--background-end-rgb), .8), rgb(var(--background-end-rgb), 0) 70.71%),
+              linear-gradient(127deg, rgb(var(--background-end-rgb), .8), rgb(var(--background-end-rgb), 0) 70.71%),
+              linear-gradient(336deg, rgb(var(--background-end-rgb), .8), rgb(var(--background-end-rgb), 0) 70.71%),
+              rgb(var(--background-start-rgb));
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
+}
+
+.input-search {
+  /* border: 1px solid red; */
+
+  textarea {
+    color: #a0a0a0;
+    margin-top: 20px;
+    font-size: 18px;
+    letter-spacing: 0.5px;
+    line-height: 140%;
+    padding-bottom: 4px;
+  }
+
+  label {
+    color: rgb(var(--headline-rgb));
+    font-size: 24px;
+  }
+}
+
+.iconColor {
+  color: #FFC107;
+  margin-top: 10px;
 }
