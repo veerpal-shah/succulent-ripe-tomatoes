@@ -5,9 +5,12 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useState } from 'react';
 import Button from '@mui/material/Button';
 import SearchIcon from '@mui/icons-material/Theaters';
+import ArrowBack from '@mui/icons-material/ArrowBackIosNew';
 import TextField from '@mui/material/TextField';
 import Container from '@mui/material/Container';
+import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid2';
 import CircularProgress from '@mui/material/CircularProgress';
 
 // Home
@@ -17,6 +20,10 @@ const Home = () => {
   const [loading, setLoading] = useState(false);
   const [movieResults, setMovieResults] = useState<any[]>([]);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+  const handleBack = () => {
+    setMovieResults([]);
+  }
 
   const handleChange = (event:any) => {
     setHasText(event.target.value.trim().length > 0);
@@ -56,7 +63,7 @@ const Home = () => {
   }
 
   return (
-    <Container sx={{padding: "0 40px"}} maxWidth="lg">
+    <Container sx={{padding: "0 40px"}} maxWidth="xl">
       <AnimatePresence>
         {movieResults.length == 0 && (
           <motion.div
@@ -119,13 +126,61 @@ const Home = () => {
                 transition={{ duration: 0.3, delay: 0.8, ease: "easeOut" }}
                 exit={{ opacity: 0, y: -40, transition: { delay: 0, duration: 0.2 } }}
               >
-              <div className="mt-4">
+              <Box sx={{flexGrow: 1 }}>
+                <Grid container>
+                  <Grid className="resultsHero" size={12} sx={{ backgroundImage: "url('https://image.tmdb.org/t/p/original" + movieResults[0].backdrop_path + "')"}}>
+                    <Button onClick={handleBack} className="backBtn" variant="text">
+                      <ArrowBack/>
+                        <span>Back</span>
+                    </Button>
+                    <Box className="rating" sx={{position: "absolute", bottom: '1vw', left: '7.5vw'}}>
+                      <CircularProgress size={50} variant="determinate" value={Math.floor(movieResults[0].vote_average * 10)} />
+                      <Box
+                        sx={{
+                          top: -3,
+                          left: 0,
+                          position: 'absolute',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          height: '100%',
+                          width: '100%',
+                        }}
+                      >
+                        <Typography
+                          variant="caption"
+                          component="div"
+                          sx={{ fontSize: '16px', color: '#ffffff', fontWeight: 'bold' }}
+                        >{movieResults[0].vote_average.toFixed(1)}</Typography>
+                      </Box>
+                      <Box className="votes">
+                        <h6>{movieResults[0].vote_count > 1000 ? `${(movieResults[0].vote_count / 1000).toFixed(1)}K VOTES` : `${movieResults[0].vote_count} VOTES`}</h6>
+                        <p>Users Are Recommending It</p>
+                      </Box>
+                    </Box>
+                  </Grid>
+                  <Grid size={8.8} sx={{ background: "none"}}>
+                  <h2>size=8.8</h2>
+                  </Grid>
+                  <Grid className='moreLikeThis' size={3.2} sx={{ background: "none"}}>
+                    <h2>More like this</h2>
+                    <ul className="list-disc pl-5">
+                    {movieResults.map((movie, index) => (
+                      index !== 0 && (
+                      <li key={index}><h3>{movie.title}</h3><img src={"https://image.tmdb.org/t/p/w154" + movie.poster_path} /></li>
+                      )
+                    ))}
+                    </ul>
+                  </Grid>
+                </Grid>
+              </Box>
+              {/* <div className="mt-4">
                 <ul className="list-disc pl-5">
                 {movieResults.map((movie, index) => (
                   <li key={index}><h2>{movie.title}</h2><img src={"https://image.tmdb.org/t/p/w154" + movie.poster_path} /></li>
                 ))}
                 </ul>
-              </div>
+              </div> */}
               </motion.div>
             )}
         </AnimatePresence>

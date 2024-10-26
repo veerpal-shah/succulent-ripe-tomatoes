@@ -14,6 +14,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     
     try {
       const searchResults = await bonsaiClient.search(userInput);
+      console.log(searchResults);
       const movies = await tmdbClient.searchMovies(searchResults);
 
       return res.status(200).json({ movies });
