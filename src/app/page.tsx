@@ -164,23 +164,43 @@ const Home = () => {
                   </Grid>
                   <Grid className='moreLikeThis' size={3.2} sx={{ background: "none"}}>
                     <h2>More like this</h2>
-                    <ul className="list-disc pl-5">
+                    <ul>
                     {movieResults.map((movie, index) => (
                       index !== 0 && (
-                      <li key={index}><h3>{movie.title}</h3><img src={"https://image.tmdb.org/t/p/w154" + movie.poster_path} /></li>
+                      <li key={index} onClick={() => console.log("new movie is movie: " + movie.id)}>
+                        <img src={"https://image.tmdb.org/t/p/w154" + movie.poster_path} />
+                        <Box className="moreRatingContainer">
+                          <h3>{movie.title}</h3>
+                          <Box className="moreRating">
+                            <CircularProgress size={'3.5vw'} variant="determinate" value={Math.floor(movie.vote_average * 10)} />
+                            <Box
+                              sx={{
+                                top: -3,
+                                left: 0,
+                                position: 'absolute',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                height: '100%',
+                                width: '100%',
+                              }}
+                            >
+                              <Typography
+                                variant="caption"
+                                component="div"
+                                sx={{ fontSize: '16px', color: '#ffffff', fontWeight: 'bold' }}
+                              >{movie.vote_average.toFixed(1)}</Typography>
+                            </Box>
+                            <p>({(new Date(movie.release_date)).getFullYear()})</p>
+                          </Box>
+                        </Box>
+                      </li>
                       )
                     ))}
                     </ul>
                   </Grid>
                 </Grid>
               </Box>
-              {/* <div className="mt-4">
-                <ul className="list-disc pl-5">
-                {movieResults.map((movie, index) => (
-                  <li key={index}><h2>{movie.title}</h2><img src={"https://image.tmdb.org/t/p/w154" + movie.poster_path} /></li>
-                ))}
-                </ul>
-              </div> */}
               </motion.div>
             )}
         </AnimatePresence>

@@ -116,4 +116,60 @@ body {
     font-weight: 600;
     font-size: 1.05rem;
   }
+
+  ul {
+    list-style-type: none;
+
+    li {
+      margin-top: 25px;
+      display: flex;
+      position: relative;
+
+      img {
+        width: 27%;
+        border-radius: 5%;
+        filter: drop-shadow(black 2px 2px 2px);
+      }
+    }
+  }
+}
+
+.moreRating {
+  position: absolute;
+  left: 1vw;
+  bottom: 0;
+
+  svg {
+    color: #FFC107;
+  }
+
+  div {
+    font-size: 1vw;
+  }
+}
+
+.moreRatingContainer {
+  padding-left: 5%;
+  position: relative;
+
+
+  h3 {
+    font-weight: 600;
+    font-size: 0.8rem;
+    color: #FFFFFF;
+    padding-left: 3%;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  p {
+    position: absolute;
+    bottom: 0;
+    left: 125%;
+    font-size: 0.7rem;
+  }
 }
