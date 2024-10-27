@@ -3,6 +3,7 @@
 import * as React from 'react';
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from 'react';
+import MovieDetails from '../components/MovieDetails';
 import Button from '@mui/material/Button';
 import SearchIcon from '@mui/icons-material/Theaters';
 import ArrowBack from '@mui/icons-material/ArrowBackIosNew';
@@ -20,6 +21,7 @@ const Home = () => {
   const [loading, setLoading] = useState(false);
   const [movieResults, setMovieResults] = useState<any[]>([]);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [currentMovie, setCurrentMovie] = useState<any | null>(null);
 
   const handleBack = () => {
     setMovieResults([]);
@@ -51,6 +53,7 @@ const Home = () => {
       if (response.ok) {
         // Update the movieResults state with the returned movie titles
         setMovieResults(data.movies);
+        setCurrentMovie(data.movies[0]);
         setErrorMessage(null);  // Clear any previous errors
       } else {
         // Handle any errors from the API
@@ -128,13 +131,13 @@ const Home = () => {
               >
               <Box sx={{flexGrow: 1 }}>
                 <Grid container>
-                  <Grid className="resultsHero" size={12} sx={{ backgroundImage: "url('https://image.tmdb.org/t/p/original" + movieResults[0].backdrop_path + "')"}}>
+                  <Grid className="resultsHero" size={12} sx={{ backgroundImage: "url('https://image.tmdb.org/t/p/original" + currentMovie.backdrop_path + "')"}}>
                     <Button onClick={handleBack} className="backBtn" variant="text">
                       <ArrowBack/>
                         <span>Back</span>
                     </Button>
                     <Box className="rating" sx={{position: "absolute", bottom: '1vw', left: '7.5vw'}}>
-                      <CircularProgress size={50} variant="determinate" value={Math.floor(movieResults[0].vote_average * 10)} />
+                      <CircularProgress size={50} variant="determinate" value={Math.floor(currentMovie.vote_average * 10)} />
                       <Box
                         sx={{
                           top: -3,
@@ -151,23 +154,23 @@ const Home = () => {
                           variant="caption"
                           component="div"
                           sx={{ fontSize: '16px', color: '#ffffff', fontWeight: 'bold' }}
-                        >{movieResults[0].vote_average.toFixed(1)}</Typography>
+                        >{currentMovie.vote_average.toFixed(1)}</Typography>
                       </Box>
                       <Box className="votes">
-                        <h6>{movieResults[0].vote_count > 1000 ? `${(movieResults[0].vote_count / 1000).toFixed(1)}K VOTES` : `${movieResults[0].vote_count} VOTES`}</h6>
+                        <h6>{currentMovie.vote_count > 1000 ? `${(currentMovie.vote_count / 1000).toFixed(1)}K VOTES` : `${currentMovie.vote_count} VOTES`}</h6>
                         <p>Users Are Recommending It</p>
                       </Box>
                     </Box>
                   </Grid>
                   <Grid size={8.8} sx={{ background: "none"}}>
-                  <h2>size=8.8</h2>
+                        <MovieDetails movieId={currentMovie.id}/>
                   </Grid>
                   <Grid className='moreLikeThis' size={3.2} sx={{ background: "none"}}>
                     <h2>More like this</h2>
                     <ul>
                     {movieResults.map((movie, index) => (
-                      index !== 0 && (
-                      <li key={index} onClick={() => console.log("new movie is movie: " + movie.id)}>
+                      movie.id !== currentMovie.id && (
+                      <li key={index} onClick={() => setCurrentMovie(movie) }>
                         <img src={"https://image.tmdb.org/t/p/w154" + movie.poster_path} />
                         <Box className="moreRatingContainer">
                           <h3>{movie.title}</h3>
