@@ -68,7 +68,7 @@ body {
 /* Layout styles */
 .grid-layout {
   display: grid;
-  grid-template-columns: 1fr 2fr 1fr;
+  grid-template-columns: 1.7fr 1.7fr 1fr;
   gap: 1rem;
 }
 
@@ -78,6 +78,8 @@ body {
   background-color: var(--container-bg-color);
   border-radius: 0.5rem;
 }
+
+
 
 /* Marquee style for board amimation */
 .marquee-border {

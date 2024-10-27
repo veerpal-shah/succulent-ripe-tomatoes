@@ -1,3 +1,4 @@
+import path from 'path';
 // pages/api/search.ts
 import type { NextApiRequest, NextApiResponse } from 'next';
 const { Client } = require('elasticsearch');
@@ -87,7 +88,9 @@ async function getMovieInfo(movie: string): Promise<any> {
           const imgData = await imgResponse.arrayBuffer();
           const buffer = Buffer.from(imgData);
 
-          fs.writeFileSync('poster.jpg', buffer);
+          //fs.writeFileSync('poster.jpg', buffer);
+          const posterFilePath = path.join(process.cwd(), 'public', 'poster.jpg');
+          fs.writeFileSync(posterFilePath, buffer);
           console.log("Poster Downloaded");
 
           console.log(`Number of Ratings: ${data.results[0].vote_count}`);

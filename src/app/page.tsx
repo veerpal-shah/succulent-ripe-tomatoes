@@ -6,7 +6,8 @@ export default function Home() {
   const [userInput, setUserInput] = useState('');
   const [movieResults, setMovieResults] = useState<string[]>([]);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [hasSearched, setHasSearched] = useState(false); // New state for tracking search status
+  const [hasSearched, setHasSearched] = useState(false); //Default to false bec
+  const [movieInfo, setMovieInfo] = useState<any | null>(null);
 
   const handleSubmit = async () => {
     if (userInput.trim() === '') {
@@ -125,12 +126,12 @@ export default function Home() {
           {/* Poster Section - Visible After Search */}
           <div className="poster-section">
             <h2 className="text-2xl font-bold mb-4">Top Result</h2>
-            <div className="aspect-w-2 aspect-h-3 border border-gray-500 flex items-center justify-center">
+            <div className="border border-gray-500 flex items-center justify-center">
               {movieResults.length > 0 ? (
                 <img
-                  src="/image_name.jpg"  // Image placeholder
+                  src={`/poster.jpg?${new Date().getTime()}`}  // Internet said this would force refresh dont really know why
                   alt={movieResults[0]}  // First movie title
-                  className="object-cover w-full h-full rounded-md"
+                  className="w-[300px] h-[450px] object-cover rounded-md"  // Fixed width and height
                 />
               ) : (
                 <p>3:2 Ratio Poster Placeholder</p> 
@@ -143,6 +144,8 @@ export default function Home() {
             </div>
           </div>
 
+
+
           {/* Recommendations Section - Visible After Search */}
           <div className="recommendations-section">
             <h2 className="text-2xl font-bold mb-4">Recommendations</h2>
@@ -154,10 +157,3 @@ export default function Home() {
     </main>
   );
 }
-
-/* 
-- Need to get this tied to the elastic search to test functionality
-- Need ability to pull image and reviews
-- Need to add in the recommendations section
-- Potentially add functionality so that only the search section is visible until a search is made
-*/
