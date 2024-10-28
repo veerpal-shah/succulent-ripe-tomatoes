@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import { motion, AnimatePresence } from "framer-motion";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import MovieDetails from '../components/MovieDetails';
 import Button from '@mui/material/Button';
 import SearchIcon from '@mui/icons-material/Theaters';
@@ -22,6 +22,7 @@ const Home = () => {
   const [movieResults, setMovieResults] = useState<any[]>([]);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [currentMovie, setCurrentMovie] = useState<any | null>(null);
+  const [currentMovieDetails, setCurrentMovieDetails] = useState<any | null>(null);
 
   const handleBack = () => {
     setMovieResults([]);
@@ -55,6 +56,7 @@ const Home = () => {
         setMovieResults(data.movies);
         setCurrentMovie(data.movies[0]);
         setErrorMessage(null);  // Clear any previous errors
+        // fetchMovieDetails();
       } else {
         // Handle any errors from the API
         setErrorMessage(data.error || 'An error occurred while searching for movies.');
@@ -64,6 +66,35 @@ const Home = () => {
       setErrorMessage('Failed to search for movies.');
     }
   }
+
+  useEffect(() => {
+    const fetchMovieDetails = async () => {
+      try {
+        // Send a POST request to the /api/search endpoint with the user's input
+        const response = await fetch('/api/movieDetails?movieId=' + currentMovie.id, {
+          method: 'GET'
+        });
+  
+        const data = await response.json();
+  
+        console.log('Response from details:', data);
+  
+        if (response.ok) {
+          // Update the movieResults state with the returned movie titles
+          setCurrentMovieDetails(data.movie);
+          // setErrorMessage(null);  // Clear any previous errors
+        } else {
+          // Handle any errors from the API
+          setErrorMessage(data.error || 'An error occurred while searching for the movie.');
+        }
+      } catch (error) {
+        console.error('Error during fetch:', error);
+        // setErrorMessage('Failed to search for movies.');
+      }
+    }
+
+    fetchMovieDetails();
+  }, [currentMovie?.id]);
 
   return (
     <Container sx={{padding: "0 40px"}} maxWidth="xl">
@@ -162,10 +193,10 @@ const Home = () => {
                       </Box>
                     </Box>
                   </Grid>
-                  <Grid size={8.8} sx={{ background: "none"}}>
-                        <MovieDetails movieId={currentMovie.id}/>
+                  <Grid size={8.8}>
+                        <MovieDetails movie={currentMovieDetails}/>
                   </Grid>
-                  <Grid className='moreLikeThis' size={3.2} sx={{ background: "none"}}>
+                  <Grid className='moreLikeThis' size={3.2}>
                     <h2>More like this</h2>
                     <ul>
                     {movieResults.map((movie, index) => (
@@ -175,7 +206,7 @@ const Home = () => {
                         <Box className="moreRatingContainer">
                           <h3>{movie.title}</h3>
                           <Box className="moreRating">
-                            <CircularProgress size={'3.5vw'} variant="determinate" value={Math.floor(movie.vote_average * 10)} />
+                            <CircularProgress size={'2vw'} variant="determinate" value={Math.floor(movie.vote_average * 10)} />
                             <Box
                               sx={{
                                 top: -3,
@@ -191,7 +222,7 @@ const Home = () => {
                               <Typography
                                 variant="caption"
                                 component="div"
-                                sx={{ fontSize: '16px', color: '#ffffff', fontWeight: 'bold' }}
+                                sx={{ color: '#ffffff', fontWeight: 'bold' }}
                               >{movie.vote_average.toFixed(1)}</Typography>
                             </Box>
                             <p>({(new Date(movie.release_date)).getFullYear()})</p>

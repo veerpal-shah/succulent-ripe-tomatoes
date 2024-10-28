@@ -109,7 +109,8 @@ body {
 .moreLikeThis {
   border-left: 1px solid rgb(var(--border-rgb));
   padding-left: 4%;
-  padding-top: 5%;
+  padding-top: 4.8vw;
+  padding-bottom: 4.8vw;
 
   h2 {
     color: #ffffff;
@@ -144,7 +145,7 @@ body {
   }
 
   div {
-    font-size: 1vw;
+    font-size: 0.7vw;
   }
 }
 
@@ -172,4 +173,118 @@ body {
     left: 125%;
     font-size: 0.7rem;
   }
+}
+
+.movieDetails {
+  padding-left: 7.5vw;
+  padding-right: 2vw;
+  padding-top: 4.8vw;
+
+  h1 {
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 2.33vw;
+    line-height: 2.33vw;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  h4 {
+    color: #ffffff;
+    font-size: 0.9vw;
+    font-weight: 700;
+    line-height: 0.9vw;
+    margin-bottom: 2vw;
+  }
+}
+
+.movieTitleInfo {
+  position: relative;
+}
+
+.genres {
+  list-style-type: none;
+  display: flex;
+  padding-top: 8px;
+
+  li {
+    display: inline-flex;
+    width: fit-content;
+    padding-left: 0;
+    padding-right: .6vw;
+
+
+    .categoryChip {
+      border-color: #293146;
+      color: rgb(var(--foreground-rgb));
+      font-weight: 600;
+      font-size: .8vw;
+      text-transform: uppercase;
+    }
+  }
+}
+
+.movieDetailsPoster {
+  width: 100%;
+  border-radius: 5%;
+  filter: drop-shadow(black 3px 3px 3px);
+}
+
+.trailerBtn {
+  background-color: #5179ff;
+  padding: 1vw;
+  height: 3.9vw;
+  border-radius: 2vw;
+  width: 14vw;
+  position: absolute;
+  bottom: 0;
+  
+  svg {
+    color: #FFFFFF!important;
+    font-size: 1.3vw;
+    position: relative;
+    left: -1.6vw;
+  }
+
+  span {
+    color: #FFFFFF;
+    font-weight: 600;
+    font-size: 0.9vw;
+    padding-left: 0;
+  }
+}
+
+.relaseInfo {
+  color: #FFFFFF;
+  font-size: 1.5vw;
+  line-height: 1.5vw;
+
+  h3 {
+    padding-bottom: 0.8vw;
+  }
+}
+
+.cast {
+  padding-bottom: 4.8vw;
+}
+
+.castMember {
+  padding: 0;
+  color: #FFFFFF;
+  font-size: 0.8vw;
+  font-weight: 600;
+  margin-bottom: 1.25vw;
+}
+
+.personCharacter {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-left: 1vw;
+}
+
+.personName {
+  color: #5179ff;
+  font-size: 0.9vw;
 }

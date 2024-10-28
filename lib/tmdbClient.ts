@@ -25,8 +25,17 @@ const searchMovies = async (queries: any[]) => {
 }
 
 const getMovieDetails = async (id: number) => {
-    return {
-        foo: "bar"
+    try {
+        const details = await client.movies.details(id);
+        const videos = await client.movies.videos(id);
+        const cast = await client.movies.credits(id);
+        const releaseDates = await client.movies.releaseDates(id);
+
+        return {details, videos, cast, releaseDates}
+    } catch(err) {
+        console.log(err);
+
+        return "Error";
     }
 }
 
