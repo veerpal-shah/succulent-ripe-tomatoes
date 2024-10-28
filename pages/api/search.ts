@@ -53,10 +53,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       // const movieTitles = ['The Matrix', 'The Matrix Reloaded', 'The Matrix Revolutions'];
 
       // Get movie info for the first movie
-      const moveiDetails = await getMovieInfo(movieTitles[0]);
+      const movieDetails = await getMovieInfo(movieTitles[0]);
+      return res.status(200).json({ movies: movieTitles, movieDetails });
+
       
       // Send a response back to the client with the movie titles
-      return res.status(200).json({ movies: movieTitles, response: response, moveiDetails: moveiDetails });
+      return res.status(200).json({ movies: movieTitles, response: response, moveiDetails: movieDetails });
     } catch (error) {
       console.error('Error searching documents:', error);
       return res.status(500).json({ error: 'Error searching for movies.' });
@@ -73,45 +75,34 @@ async function getMovieInfo(movie: string): Promise<any> {
   const api_key = process.env.TMDB_API_KEY;
   const searchUrl = `https://api.themoviedb.org/3/search/movie?api_key=${api_key}&query=${encodeURIComponent(movie)}`;
 
-
   try {
-      const response = await fetch(searchUrl);
-      const data = await response.json();
+    const response = await fetch(searchUrl);
+    const data = await response.json();
 
-      console.log("Movie Info:", data);
+    console.log("Movie Info:", data);
 
-      if (data.results && data.results.length > 0) {
-          // POSTER
-          const posterPath: string = data.results[0].poster_path;
-          const fullPath: string = `https://image.tmdb.org/t/p/w500/${posterPath}`;
-          const imgResponse = await fetch(fullPath);
-          const imgData = await imgResponse.arrayBuffer();
-          const buffer = Buffer.from(imgData);
+    if (data.results && data.results.length > 0) {
+      const movieData = data.results[0];
 
-          //fs.writeFileSync('poster.jpg', buffer);
-          const posterFilePath = path.join(process.cwd(), 'public', 'poster.jpg');
-          fs.writeFileSync(posterFilePath, buffer);
-          console.log("Poster Downloaded");
+      // Save poster image to public folder
+      const posterPath = movieData.poster_path;
+      const fullPath = `https://image.tmdb.org/t/p/w500/${posterPath}`;
+      const imgResponse = await fetch(fullPath);
+      const imgData = await imgResponse.arrayBuffer();
+      const buffer = Buffer.from(imgData);
+      const posterFilePath = path.join(process.cwd(), 'public', 'poster.jpg');
+      fs.writeFileSync(posterFilePath, buffer);
+      console.log("Poster Downloaded");
 
-          console.log(`Number of Ratings: ${data.results[0].vote_count}`);
-          console.log(`Average Rating Out of 10: ${data.results[0].vote_average}`);
-          const movieId: number = data.results[0].id;
-
-          const reviewUrl = `https://api.themoviedb.org/3/movie/${movieId}/reviews?api_key=${api_key}`;
-          const reviewsResponse = await fetch(reviewUrl);
-          const reviewsData = await reviewsResponse.json();
-
-          if (reviewsData.results && reviewsData.results.length > 0) {
-              console.log(reviewsData.results[0].content);
-          } else {
-              console.log("No reviews found.");
-          }
-
-          return data;
-      } else {
-          console.log("No results found.");
-      }
+      return {
+        title: movieData.title,
+        rating: movieData.vote_average, // Average rating out of 10
+        reviewCount: movieData.vote_count, // Number of ratings
+      };
+    } else {
+      console.log("No results found.");
+    }
   } catch (error) {
-      console.error("Error fetching movie info:", error);
+    console.error("Error fetching movie info:", error);
   }
 }

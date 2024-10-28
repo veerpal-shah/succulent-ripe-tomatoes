@@ -6,8 +6,9 @@ export default function Home() {
   const [userInput, setUserInput] = useState('');
   const [movieResults, setMovieResults] = useState<string[]>([]);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [hasSearched, setHasSearched] = useState(false); //Default to false bec
-  const [movieInfo, setMovieInfo] = useState<any | null>(null);
+  const [hasSearched, setHasSearched] = useState(false); //Default to false because we haven't searched yet
+  const [movieDetails, setMovieDetails] = useState<{ rating: number; reviewCount: number } | null>(null);
+
 
   const handleSubmit = async () => {
     if (userInput.trim() === '') {
@@ -35,6 +36,7 @@ export default function Home() {
         // Update the movieResults state with the returned movie titles
         console.log('Movie Results:', data.movies);
         setMovieResults(data.movies);
+        setMovieDetails(data.movieDetails);
         setErrorMessage(null);  
         setHasSearched(true);  // Indicate that a search has been made
       } else {
@@ -134,16 +136,19 @@ export default function Home() {
                   className="w-[300px] h-[450px] object-cover rounded-md"  // Fixed width and height
                 />
               ) : (
-                <p>3:2 Ratio Poster Placeholder</p> 
+                <p>3:2 Ratio Poster Placeholder</p>
               )}
             </div>
             <div className="mt-4">
               <p>{movieResults.length > 0 ? `Title: ${movieResults[0]}` : "Title"}</p>
-              <p>Rating</p>
-              <p>Review</p>
+              {movieDetails && (
+                <>
+                  <p>Average Rating: {movieDetails.rating} / 10</p>
+                  <p>Number of Ratings: {movieDetails.reviewCount}</p>
+                </>
+              )}
             </div>
           </div>
-
 
 
           {/* Recommendations Section - Visible After Search */}
