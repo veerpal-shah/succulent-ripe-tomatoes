@@ -154,7 +154,9 @@ const Home = () => {
               },
               '&:hover': {
                 backgroundColor: 'rgba(97, 105, 141, 0.2)'
-              } 
+              },
+              color: '#FFC107',
+              marginTop: '10px',
               }}>
                 <span style={{transition: "opacity 0.4s ease", textTransform: "none", color:"white", opacity: hasText ? 1 : 0.5}}>Search</span>
             </Button>
@@ -176,7 +178,13 @@ const Home = () => {
                     <Button onClick={handleBack} className="backBtn" variant="text" sx={{
                       "span": {
                         paddingLeft: '10px'
-                      }
+                      },
+                      color: '#FFFFFF',
+                      textTransform: 'none',
+                      fontWeight: 'bold',
+                      marginLeft: '6.5vw',
+                      fontSize: '0.75rem',
+                      marginTop: '0.5vw'
                     }}>
                       <ArrowBack/>
                         <span>Back</span>

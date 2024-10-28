@@ -3,7 +3,7 @@ import { TMDB } from 'tmdb-ts';
 
 
 // Create Client
-const client = new TMDB("eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI0NTFhMDhjOWMyNTYwMmZhMzAyNzVjZDgzNzA3M2VkZiIsIm5iZiI6MTcyOTgyOTU4NS4wNzYwNTgsInN1YiI6IjY3MWIxYTIyNWQwZGU4OTA0MmQ5MDA0YiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.A2QjbEEo473SLZffmXFcziaGEZlo6XFLGGlzTYeVMkc");
+const client = new TMDB(process.env.TMDB_KEY);
 
 // Wrapper for search to elastic search
 const searchMovie = async (query: string, year: number) => {

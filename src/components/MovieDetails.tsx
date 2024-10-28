@@ -69,7 +69,14 @@ export default function MovieDetails({movie} : {movie:any | null}) {
                             fontWeight: '600',
                             fontSize: '0.9vw',
                             paddingLeft: '0'
-                        }
+                        },
+                        backgroundColor: '#5179ff',
+                        padding: '1vw',
+                        height: '3.9vw',
+                        borderRadius: '2vw',
+                        width: '14vw',
+                        position: 'absolute',
+                        bottom: '0',
                     }}/>
                 </Grid> 
                 <Grid size={2} className="relaseInfo" sx={{
