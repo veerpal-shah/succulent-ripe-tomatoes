@@ -34,24 +34,6 @@ body {
   }
 }
 
-.input-search {
-  /* border: 1px solid red; */
-
-  textarea {
-    color: #a0a0a0;
-    margin-top: 20px;
-    font-size: 18px;
-    letter-spacing: 0.5px;
-    line-height: 140%;
-    padding-bottom: 4px;
-  }
-
-  label {
-    color: rgb(var(--headline-rgb));
-    font-size: 24px;
-  }
-}
-
 .iconColor {
   color: #FFC107;
   margin-top: 10px;
@@ -74,16 +56,6 @@ body {
   margin-left: 6.5vw;
   font-size: 0.75rem;
   margin-top: 0.5vw;
-
-  span {
-    padding-left: 10px;
-  }
-}
-
-.rating {
-  svg {
-    color: #FFC107;
-  }
 }
 
 .votes {
@@ -92,18 +64,6 @@ body {
   left: 65px;
   top: 10px;
   width: max-content;
-
-  h6 {
-    font-weight: bold;
-    font-size: 0.75rem;
-    color: #FFFFFF;
-  }
-
-  p {
-    font-weight: bold;
-    font-size: .7rem;
-    color: #eeeeee;
-  }
 }
 
 .moreLikeThis {
@@ -111,92 +71,23 @@ body {
   padding-left: 4%;
   padding-top: 4.8vw;
   padding-bottom: 4.8vw;
-
-  h2 {
-    color: #ffffff;
-    font-weight: 600;
-    font-size: 1.05rem;
-  }
-
-  ul {
-    list-style-type: none;
-
-    li {
-      margin-top: 25px;
-      display: flex;
-      position: relative;
-
-      img {
-        width: 27%;
-        border-radius: 5%;
-        filter: drop-shadow(black 2px 2px 2px);
-      }
-    }
-  }
 }
 
 .moreRating {
   position: absolute;
   left: 1vw;
   bottom: 0;
-
-  svg {
-    color: #FFC107;
-  }
-
-  div {
-    font-size: 0.7vw;
-  }
 }
 
 .moreRatingContainer {
   padding-left: 5%;
   position: relative;
-
-
-  h3 {
-    font-weight: 600;
-    font-size: 0.8rem;
-    color: #FFFFFF;
-    padding-left: 3%;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
-    line-clamp: 2;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  p {
-    position: absolute;
-    bottom: 0;
-    left: 125%;
-    font-size: 0.7rem;
-  }
 }
 
 .movieDetails {
   padding-left: 7.5vw;
   padding-right: 2vw;
   padding-top: 4.8vw;
-
-  h1 {
-    color: #ffffff;
-    font-weight: 600;
-    font-size: 2.33vw;
-    line-height: 2.33vw;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  h4 {
-    color: #ffffff;
-    font-size: 0.9vw;
-    font-weight: 700;
-    line-height: 0.9vw;
-    margin-bottom: 2vw;
-  }
 }
 
 .movieTitleInfo {
@@ -207,22 +98,6 @@ body {
   list-style-type: none;
   display: flex;
   padding-top: 8px;
-
-  li {
-    display: inline-flex;
-    width: fit-content;
-    padding-left: 0;
-    padding-right: .6vw;
-
-
-    .categoryChip {
-      border-color: #293146;
-      color: rgb(var(--foreground-rgb));
-      font-weight: 600;
-      font-size: .8vw;
-      text-transform: uppercase;
-    }
-  }
 }
 
 .movieDetailsPoster {
@@ -239,30 +114,12 @@ body {
   width: 14vw;
   position: absolute;
   bottom: 0;
-  
-  svg {
-    color: #FFFFFF!important;
-    font-size: 1.3vw;
-    position: relative;
-    left: -1.6vw;
-  }
-
-  span {
-    color: #FFFFFF;
-    font-weight: 600;
-    font-size: 0.9vw;
-    padding-left: 0;
-  }
 }
 
 .relaseInfo {
   color: #FFFFFF;
   font-size: 1.5vw;
   line-height: 1.5vw;
-
-  h3 {
-    padding-bottom: 0.8vw;
-  }
 }
 
 .cast {

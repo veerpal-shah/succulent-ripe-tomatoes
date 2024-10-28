@@ -11,7 +11,24 @@ export default function MovieDetails({movie} : {movie:any | null}) {
     return (
         <Fragment>
         {movie && (
-            <Grid className="movieDetails" container spacing={5.3}>
+            <Grid className="movieDetails" container spacing={5.3} sx={{
+                "h1": {
+                    color: '#ffffff',
+                    fontWeight: '600',
+                    fontSize: '2.33vw',
+                    lineHeight: '2.33vw',
+                    whiteSpace: 'nowrap',
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                  },
+                "h4": {
+                    color: '#ffffff',
+                    fontSize: '0.9vw',
+                    fontWeight: '700',
+                    lineHeight: '0.9vw',
+                    marginBottom: '2vw',
+                  }
+            }}>
                 <Grid size={2}>
                     <img className="movieDetailsPoster" src={"https://image.tmdb.org/t/p/w185" + movie.details.poster_path} />
                 </Grid> 
@@ -19,18 +36,47 @@ export default function MovieDetails({movie} : {movie:any | null}) {
                     <h1>{movie.details.title}</h1>
                     <ul className="genres">
                     {movie.details.genres.map((genre:any, index:number) => (
-                        <ListItem key={index}>
+                        <ListItem key={index} sx={{
+                            display: 'inline-flex',
+                            width: 'fit-content',
+                            paddingLeft: '0',
+                            paddingRight: '.6vw'
+                        }}>
                             <Chip
                             label={genre.name}
                             variant="outlined"
                             className="categoryChip"
+                            sx={{
+                                borderColor: '#293146',
+                                color: '#727ba1',
+                                fontWeight: '600',
+                                fontSize: '.8vw',
+                                textTransform: 'uppercase'
+                            }}
                             />
                         </ListItem>
                     ))}
                     </ul>
-                    <Chip className="trailerBtn" icon={<PlayArrow />} label="WATCH TRAILER" />
+                    <Chip className="trailerBtn" icon={<PlayArrow />} label="WATCH TRAILER" sx={{
+                        "svg": {
+                            color: "#FFFFFF!important",
+                            fontSize: "1.3vw",
+                            position: 'relative',
+                            left: '-1.6vw'
+                        },
+                        "span": {
+                            color: '#FFFFFF',
+                            fontWeight: '600',
+                            fontSize: '0.9vw',
+                            paddingLeft: '0'
+                        }
+                    }}/>
                 </Grid> 
-                <Grid size={2} className="relaseInfo">
+                <Grid size={2} className="relaseInfo" sx={{
+                    "h3": {
+                        paddingBottom: '0.8vw'
+                    }
+                }}>
                     <h3>{(new Date(movie.details.release_date)).getFullYear()}</h3>
                     <h3>{(movie.details.runtime > 60 ? Math.floor(movie.details.runtime / 60) + "H" : "")} {movie.details.runtime % 60}MIN</h3>
                     {movie.releaseDates.results.find((release:any) => release.iso_3166_1 == "US") && (

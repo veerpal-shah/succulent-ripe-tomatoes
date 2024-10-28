@@ -118,9 +118,19 @@ const Home = () => {
               fullWidth
               sx={{
                 "& label": {
+                  color: '#ffffff',
+                  fontSize: '24px',
                   "&.Mui-focused": {
-                    color: '#ffffff',
+                    color: '#ffffff'
                   }
+                },
+                "& textarea": {
+                  color: '#a0a0a0',
+                  marginTop: '20px',
+                  fontSize: '18px',
+                  letterSpacing: '0.5px',
+                  lineHeight: '140%',
+                  paddingBottom: '4px'
                 },
                 '& .MuiInput-underline:after': {
                   borderBottomColor: '#252b3b',
@@ -163,11 +173,15 @@ const Home = () => {
               <Box sx={{flexGrow: 1 }}>
                 <Grid container>
                   <Grid className="resultsHero" size={12} sx={{ backgroundImage: "url('https://image.tmdb.org/t/p/original" + currentMovie.backdrop_path + "')"}}>
-                    <Button onClick={handleBack} className="backBtn" variant="text">
+                    <Button onClick={handleBack} className="backBtn" variant="text" sx={{
+                      "span": {
+                        paddingLeft: '10px'
+                      }
+                    }}>
                       <ArrowBack/>
                         <span>Back</span>
                     </Button>
-                    <Box className="rating" sx={{position: "absolute", bottom: '1vw', left: '7.5vw'}}>
+                    <Box className="rating" sx={{position: "absolute", bottom: '1vw', left: '7.5vw', "svg": { color: '#FFC107'}}}>
                       <CircularProgress size={50} variant="determinate" value={Math.floor(currentMovie.vote_average * 10)} />
                       <Box
                         sx={{
@@ -187,25 +201,79 @@ const Home = () => {
                           sx={{ fontSize: '16px', color: '#ffffff', fontWeight: 'bold' }}
                         >{currentMovie.vote_average.toFixed(1)}</Typography>
                       </Box>
-                      <Box className="votes">
-                        <h6>{currentMovie.vote_count > 1000 ? `${(currentMovie.vote_count / 1000).toFixed(1)}K VOTES` : `${currentMovie.vote_count} VOTES`}</h6>
-                        <p>Users Are Recommending It</p>
+                      <Box className="votes" sx={{
+                        "h6": { 
+                          color: '#ffffff',
+                          fontWeight: 'bold',
+                          fontSize: '0.75rem'
+                        },
+                        "p": {
+                          fontWeight: 'bold',
+                          fontSize: '.7rem',
+                          color: '#eeeeee',
+                        }
+                      }}>
+                        <h6 className="votesTotal">{currentMovie.vote_count > 1000 ? `${(currentMovie.vote_count / 1000).toFixed(1)}K VOTES` : `${currentMovie.vote_count} VOTES`}</h6>
+                        <p className="votesTag">Users Are Recommending It</p>
                       </Box>
                     </Box>
                   </Grid>
                   <Grid size={8.8}>
                         <MovieDetails movie={currentMovieDetails}/>
                   </Grid>
-                  <Grid className='moreLikeThis' size={3.2}>
+                  <Grid className='moreLikeThis' size={3.2} sx={{
+                    "h2": {
+                      color: '#ffffff',
+                      fontWeight: '600',
+                      fontSize: '1.05rem'
+                    },
+                    "ul": {
+                      listStyleType: 'none',
+                  
+                      "li": {
+                        marginTop: '25px',
+                        display: 'flex',
+                        position: 'relative',
+                  
+                        "img": {
+                          width: '27%',
+                          borderRadius: '5%',
+                          filter: 'drop-shadow(black 2px 2px 2px)'
+                        }
+                      }
+                    }
+                  }}>
                     <h2>More like this</h2>
                     <ul>
                     {movieResults.map((movie, index) => (
                       movie.id !== currentMovie.id && (
                       <li key={index} onClick={() => setCurrentMovie(movie) }>
                         <img src={"https://image.tmdb.org/t/p/w154" + movie.poster_path} />
-                        <Box className="moreRatingContainer">
+                        <Box className="moreRatingContainer" sx={{
+                            "h3": {
+                              fontWeight: '600',
+                              fontSize: '0.8rem',
+                              color: '#FFFFFF',
+                              paddingLeft: '3%',
+                              display: '-webkit-box',
+                              webkitBoxOrient: 'vertical',
+                              webkitLineClamp: '2',
+                              lineClamp: '2',
+                              overflow: 'hidden',
+                              textOverflow: 'ellipsis',
+                            },
+                        }}>
                           <h3>{movie.title}</h3>
-                          <Box className="moreRating">
+                          <Box className="moreRating" sx={{
+                            "svg": {
+                              color: '#FFC107',
+                            },
+                          
+                            "div": {
+                              fontSize: '0.7vw',
+                              position: 'absolute',
+                            }
+                          }}>
                             <CircularProgress size={'2vw'} variant="determinate" value={Math.floor(movie.vote_average * 10)} />
                             <Box
                               sx={{
@@ -217,6 +285,12 @@ const Home = () => {
                                 justifyContent: 'center',
                                 height: '100%',
                                 width: '100%',
+
+                                "span": {
+                                  paddingTop: '1.8vw',
+                                  marginLeft: '5.4vw',
+                                  color: '#727ba4',
+                                }
                               }}
                             >
                               <Typography
@@ -224,8 +298,8 @@ const Home = () => {
                                 component="div"
                                 sx={{ color: '#ffffff', fontWeight: 'bold' }}
                               >{movie.vote_average.toFixed(1)}</Typography>
+                              <span>({(new Date(movie.release_date)).getFullYear()})</span>
                             </Box>
-                            <p>({(new Date(movie.release_date)).getFullYear()})</p>
                           </Box>
                         </Box>
                       </li>
