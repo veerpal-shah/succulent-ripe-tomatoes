@@ -98,7 +98,9 @@ export default function MovieDetails({movie} : {movie:any | null}) {
                     <h4>CAST</h4>
                     <ul>
                     {movie.cast.cast.map((person:any, index:number) => (
-                        <ListItem alignItems="flex-start" className="castMember" key={index}>
+                        <ListItem alignItems="flex-start" className="castMember" key={index} sx={{
+                            paddingLeft: '0'
+                        }}>
                             <Avatar
                                 alt={person.name}
                                 src={"https://image.tmdb.org/t/p/w45" + person.profile_path}

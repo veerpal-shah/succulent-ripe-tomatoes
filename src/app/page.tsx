@@ -149,14 +149,14 @@ const Home = () => {
             />)}
             <Button onClick={handleClick} disabled={!hasText} aria-label="search" startIcon={<SearchIcon />} className="iconColor" 
               sx={{
-              "&.Mui-disabled": {
-                color: "#5f4803"
-              },
-              '&:hover': {
-                backgroundColor: 'rgba(97, 105, 141, 0.2)'
-              },
-              color: '#FFC107',
-              marginTop: '10px',
+                color: '#FFC107',
+                marginTop: '10px',
+                "&.Mui-disabled": {
+                  color: "#5f4803"
+                },
+                '&:hover': {
+                  backgroundColor: 'rgba(97, 105, 141, 0.2)'
+                },
               }}>
                 <span style={{transition: "opacity 0.4s ease", textTransform: "none", color:"white", opacity: hasText ? 1 : 0.5}}>Search</span>
             </Button>
