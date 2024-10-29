@@ -71,6 +71,12 @@ export default function Home() {
               rows={6}
               value={userInput}
               onChange={(e) => setUserInput(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' && !e.shiftKey) {  // Avoids newline if shift key is not pressed
+                  e.preventDefault(); // Prevents adding a new line
+                  handleSubmit(); // Calls your handleSubmit function
+                }
+              }}
             />
           </div>
 
@@ -102,6 +108,12 @@ export default function Home() {
                 rows={4}
                 value={userInput}
                 onChange={(e) => setUserInput(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' && !e.shiftKey) {  // Avoids newline if shift key is not pressed
+                    e.preventDefault(); // Prevents adding a new line
+                    handleSubmit(); // Calls your handleSubmit function
+                  }
+                }}
               />
             </div>
 
