@@ -3,6 +3,9 @@ import { TMDB } from 'tmdb-ts';
 
 
 // Create Client
+if (!process.env.TMDB_KEY) {
+    throw new Error("TMDB_KEY is not defined in environment variables");
+}
 const client = new TMDB(process.env.TMDB_KEY);
 
 // Wrapper for search to elastic search
