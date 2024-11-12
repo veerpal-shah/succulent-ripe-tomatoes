@@ -3,31 +3,126 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+  --foreground-rgb: 111, 123, 161;
+  --background-start-rgb: 12, 17, 23;
+  --background-end-rgb: 4, 6, 8;
+  --headline-rgb: 255, 255, 255;
+  --border-rgb: 39, 42, 59;
 }
 
-@media (prefers-color-scheme: dark) {
+/* @media (prefers-color-scheme: dark) {
   :root {
     --foreground-rgb: 255, 255, 255;
     --background-start-rgb: 0, 0, 0;
     --background-end-rgb: 0, 0, 0;
   }
-}
+} */
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  background: linear-gradient(180deg, rgb(var(--background-end-rgb), .8), rgb(var(--background-end-rgb), 0) 550px),
+              /* linear-gradient(217deg, rgb(var(--background-end-rgb), .8), rgb(var(--background-end-rgb), 0) 70.71%),
+              linear-gradient(127deg, rgb(var(--background-end-rgb), .8), rgb(var(--background-end-rgb), 0) 70.71%),
+              linear-gradient(336deg, rgb(var(--background-end-rgb), .8), rgb(var(--background-end-rgb), 0) 70.71%), */
+              rgb(var(--background-start-rgb));
+  min-height: 100vh;
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
+}
+
+.iconColor {
+  color: #FFC107!important;
+  margin-top: 10px!important;
+}
+
+.resultsHero {
+  max-height: 285px; 
+  height: 22vw;
+  box-shadow: 0 0 200px rgba(4,6,8,1.0) inset;
+  background-size: cover;
+  background-position-y: 25%;
+  border-radius: 0 0 3vw 3vw;
+  position: relative;
+}
+
+.votes {
+  position: absolute;
+  bottom: 0;
+  left: 65px;
+  top: 10px;
+  width: max-content;
+}
+
+.moreLikeThis {
+  border-left: 1px solid rgb(var(--border-rgb));
+  padding-left: 4%;
+  padding-top: 4.8vw;
+  padding-bottom: 4.8vw;
+}
+
+.moreRating {
+  position: absolute;
+  left: 1vw;
+  bottom: 0;
+}
+
+.moreRatingContainer {
+  padding-left: 5%;
+  position: relative;
+}
+
+.movieDetails {
+  padding-left: 7.5vw;
+  padding-right: 2vw;
+  padding-top: 4.8vw;
+}
+
+.movieTitleInfo {
+  position: relative;
+}
+
+.genres {
+  list-style-type: none;
+  display: flex;
+  padding-top: 8px;
+}
+
+.movieDetailsPoster {
+  width: 100%;
+  border-radius: 5%;
+  filter: drop-shadow(black 3px 3px 3px);
+}
+
+.relaseInfo {
+  color: #FFFFFF;
+  font-size: 1.5vw;
+  line-height: 1.5vw;
+}
+
+.cast {
+  padding-bottom: 4.8vw;
+}
+
+.castMember {
+  padding: 0;
+  color: #FFFFFF;
+  font-size: 0.8vw;
+  font-weight: 600;
+  margin-bottom: 1.25vw;
+}
+
+.personCharacter {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-left: 1vw;
+}
+
+.personName {
+  color: #5179ff;
+  font-size: 0.9vw;
 }
