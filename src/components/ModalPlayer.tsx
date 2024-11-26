@@ -24,7 +24,7 @@ export default function ModalPlayer({ open, videoID, onClose }: ModalPlayerProps
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                marginTop: '3.8%',
+                maxHeight: '100vh',
             }}>
                 <iframe
                 width="100%"
