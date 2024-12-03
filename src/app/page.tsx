@@ -118,7 +118,7 @@ const Home = () => {
 
       if (response.ok) {
         // Update the movieResults state with the returned movie titles
-        setMovieResults(data.movies);
+        setMovieResults(data.movies.filter((movie: any) => movie));
         setCurrentMovie(data.movies[0]);
         setErrorMessage(null);  // Clear any previous errors
         // fetchMovieDetails();
