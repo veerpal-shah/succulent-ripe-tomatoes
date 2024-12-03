@@ -3,10 +3,31 @@ import ListItem from '@mui/material/ListItem';
 import Chip from '@mui/material/Chip';
 import Avatar from '@mui/material/Avatar';
 import PlayArrow from '@mui/icons-material/PlayArrow';
-import {Fragment} from 'react';
+import {Fragment, useEffect, useState} from 'react';
+import ModalPlayer from './ModalPlayer';
 
 export default function MovieDetails({movie} : {movie:any | null}) {
-    console.log(movie);
+    // console.log(movie);
+    const [showPlayer, setShowPlayer] = useState(false);
+    const [videoID, setVideoID] = useState(undefined);
+
+    let playTrailer = () => {
+        setShowPlayer(true);
+    }
+
+    let closeTrailer = () => {
+        setShowPlayer(false);
+    }
+
+    useEffect(() => {
+        let id = movie?.videos.results.find((video: { type: string; }) => video.type == "Trailer")?.key;
+        
+        if (id == undefined) {
+            id = movie?.videos.results[0].key;
+        }
+        
+        setVideoID(id);
+      }, [movie, setVideoID]);
 
     return (
         <Fragment>
@@ -57,7 +78,7 @@ export default function MovieDetails({movie} : {movie:any | null}) {
                         </ListItem>
                     ))}
                     </ul>
-                    <Chip className="trailerBtn" icon={<PlayArrow />} label="WATCH TRAILER" sx={{
+                    <Chip onClick={playTrailer} className="trailerBtn" icon={<PlayArrow />} label="WATCH TRAILER" sx={{
                         "svg": {
                             color: "#FFFFFF!important",
                             fontSize: "1.3vw",
@@ -78,6 +99,7 @@ export default function MovieDetails({movie} : {movie:any | null}) {
                         position: 'absolute',
                         bottom: '0',
                     }}/>
+                    <ModalPlayer open={showPlayer} videoID={videoID} onClose={closeTrailer}/>
                 </Grid> 
                 <Grid size={2} className="relaseInfo" sx={{
                     "h3": {

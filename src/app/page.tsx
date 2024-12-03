@@ -13,6 +13,8 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid2';
 import CircularProgress from '@mui/material/CircularProgress';
+import StopIcon from '@mui/icons-material/Stop';
+import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked';
 
 // Home
 const Home = () => {
@@ -23,6 +25,69 @@ const Home = () => {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [currentMovie, setCurrentMovie] = useState<any | null>(null);
   const [currentMovieDetails, setCurrentMovieDetails] = useState<any | null>(null);
+
+
+  const [isRecording, setIsRecording] = useState(false);
+  const [audioBlob, setAudioBlob] = useState<Blob | null>(null);
+  const [mediaRecorder, setMediaRecorder] = useState<MediaRecorder | null>(null);
+
+  const handleRecord = async () => {
+    // Request permission to access the microphone
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    const recorder = new MediaRecorder(stream);
+    setMediaRecorder(recorder);
+  
+    recorder.start();
+    setIsRecording(true);
+  
+    // Capture audio data as chunks
+    const chunks: BlobPart[] = [];
+    recorder.ondataavailable = (event) => chunks.push(event.data);
+  
+    // Save the recording as a Blob and start transcription when recording stops
+    recorder.onstop = async () => {
+      const blob = new Blob(chunks, { type: 'audio/wav' });
+      setAudioBlob(blob); // Dont need this
+      setIsRecording(false);
+  
+      // Start transcription after recording stops
+      await handleTranscription(blob);
+    };
+  };
+
+  const handleStopRecording = () => {
+    if (mediaRecorder) {
+      mediaRecorder.stop();
+      setIsRecording(false);
+    }
+  };
+
+  const handleTranscription = async (blob: Blob) => {
+    if (!blob) return;
+  
+    setLoading(true); // Show loading spinner
+    console.log('Transcribing audio...');
+  
+    const formData = new FormData();
+    formData.append("audio", blob, "recorded.wav");
+  
+    // Send the audio file to the backend for transcription
+    const response = await fetch('/api/transcribe', {
+      method: 'POST',
+      body: formData,
+    });
+  
+    const { transcript, error } = await response.json();
+    setLoading(false); // Hide loading spinner
+  
+    if (transcript) {
+      console.log('Transcription:', transcript);
+      setUserInput(transcript); // Aiden Test This
+      setHasText(true);
+    } else {
+      console.error('Error transcribing audio:', error);
+    }
+  };
 
   const handleBack = () => {
     setMovieResults([]);
@@ -53,7 +118,7 @@ const Home = () => {
 
       if (response.ok) {
         // Update the movieResults state with the returned movie titles
-        setMovieResults(data.movies);
+        setMovieResults(data.movies.filter((movie: any) => movie));
         setCurrentMovie(data.movies[0]);
         setErrorMessage(null);  // Clear any previous errors
         // fetchMovieDetails();
@@ -116,6 +181,7 @@ const Home = () => {
               variant="standard"
               className="input-search"
               fullWidth
+              value={userInput}
               sx={{
                 "& label": {
                   color: '#ffffff',
@@ -147,6 +213,17 @@ const Home = () => {
                 marginRight: '10px',
               }}
             />)}
+            <div style={{ textAlign: 'center', marginTop: '20px' }}>
+              <button onClick={isRecording ? handleStopRecording : handleRecord} style={{ fontSize: '24px', border: 'none', background: 'none', cursor: 'pointer' }}>
+                {isRecording ? <StopIcon style={{ fontSize: '48px', color: 'red' }} /> : <RadioButtonUncheckedIcon style={{ fontSize: '48px', color: 'green' }} />}
+              </button>
+              
+              {loading && (
+                <div style={{ marginTop: '10px' }}>
+                  <CircularProgress size={24} />
+                </div>
+              )}
+            </div>
             <Button onClick={handleClick} disabled={!hasText} aria-label="search" startIcon={<SearchIcon />} className="iconColor" 
               sx={{
                 color: '#FFC107',
