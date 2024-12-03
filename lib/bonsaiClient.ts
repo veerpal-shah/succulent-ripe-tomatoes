@@ -18,7 +18,10 @@ const search = async (query: String) => {
             body: {
                 query: {
                     more_like_this: {
-                        fields: ['Plot'],
+                        fields: ['Plot', 'Title'],
+                        stop_words: [
+                            "the", "a", "to", "or", "and"
+                         ],
                         like: query,
                         min_term_freq: 1,
                         max_query_terms: 25,
@@ -37,7 +40,7 @@ const search = async (query: String) => {
 
 // Parse elastic search into list of movie objects
 const parseSearchResponse = (response: any) => {
-    return response?.hits?.hits?.map((hit: any) => {
+    const parsedResults = response?.hits?.hits?.map((hit: any) => {
         return {
             "id": hit?._id,
             "cast": hit?._source?.Cast.split(', '),
@@ -49,6 +52,16 @@ const parseSearchResponse = (response: any) => {
             "title": hit?._source?.Title,
             "wiki": hit?._source['Wiki Page']
         }
+    });
+
+    // Sort to move 'American' origin movies to the top
+    return parsedResults?.sort((a: any, b: any) => {
+        if (a.origin === 'American' && b.origin !== 'American') {
+            return -1;
+        } else if (a.origin !== 'American' && b.origin === 'American') {
+            return 1;
+        }
+        return 0; // Maintain relative order for others
     });
 }
 
